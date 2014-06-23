@@ -1,11 +1,11 @@
 package challenge168
 
+import scala.annotation.tailrec
 import scala.io.Source
 import scala.util.Failure
 import scala.util.Random
 import scala.util.Success
 import scala.util.Try
-import scala.annotation.tailrec
 
 /**
  * Solution to challenge #168 on Reddit /r/dailyprogrammer
@@ -62,7 +62,9 @@ object Solution168 {
   }
 
   /**
-   * Generates n random unique students.
+   * Generates a random student.
+   * @return
+   *     a random student.
    */
   @tailrec
   private def generateStudent: Student = {
@@ -84,6 +86,8 @@ object Solution168 {
 
   /**
    * Generates NUM_OF_GRADES random grades.
+   * @return
+   *     A list of integers from 0 to MAX_SCORE.
    */
   private def generateGrades: Grades = {
     List.fill(NUM_OF_GRADES) {

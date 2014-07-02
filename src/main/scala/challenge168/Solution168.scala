@@ -23,9 +23,6 @@ object Solution168 {
   lazy val firstNames = Source.fromFile("src/main/scala/challenge168/firstnames.txt").getLines().toArray
   lazy val lastNames = Source.fromFile("src/main/scala/challenge168/lastnames.txt").getLines().toArray
 
-  // A set containing all of the students generated thus far.
-  var generatedStudents = Set[Student]()
-
   // Max number of grades.
   val NUM_OF_GRADES = 5
 
@@ -40,9 +37,9 @@ object Solution168 {
       println("Please provide a single number specifying the number of records to generate.")
     } else {
       Try {
-        Integer.parseInt(args(0))
+        args(0).toInt
       } match {
-        case Success(n) => generateRecords(n).foreach(t => printRecord(t._1, t._2))
+        case Success(n) => generateRecords(n).foreach(printRecord(_))
         case Failure(_) => println("Please only enter integers.")
       }
     }
@@ -66,22 +63,12 @@ object Solution168 {
    * @return
    *     a random student.
    */
-  @tailrec
   private def generateStudent: Student = {
     // Select a random first & name
     val firstIndex = rand.nextInt(firstNames.length)
     val lastIndex = rand.nextInt(lastNames.length)
 
-    val stud = Student(firstNames(firstIndex), lastNames(lastIndex))
-
-    // If we have already generated the student, generate
-    // another instead to avoid duplicates.
-    if (generatedStudents.contains(stud)) {
-      generateStudent
-    } else {
-      generatedStudents += stud
-      stud
-    }
+    Student(firstNames(firstIndex), lastNames(lastIndex))
   }
 
   /**
